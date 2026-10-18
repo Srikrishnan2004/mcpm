@@ -1,0 +1,16 @@
+[package]
+name = "mcpm-cli"
+description = "mcpm command-line tool and launcher shim used by AI client configs."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[[bin]]
+name = "mcpm"
+path = "src/main.rs"
+
+[dependencies]
+mcpm-core.workspace = true
+clap.workspace = true
+which.workspace = true

@@ -1,0 +1,132 @@
+@import "tailwindcss";
+@import "./tokens.css";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme inline {
+  --font-sans: "Geist Variable", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, SFMono-Regular, Menlo, Monaco, "Liberation Mono", monospace;
+
+  --color-bg-100: var(--bg-100);
+  --color-bg-200: var(--bg-200);
+
+  --color-gray-100: var(--gray-100);
+  --color-gray-200: var(--gray-200);
+  --color-gray-300: var(--gray-300);
+  --color-gray-400: var(--gray-400);
+  --color-gray-500: var(--gray-500);
+  --color-gray-600: var(--gray-600);
+  --color-gray-700: var(--gray-700);
+  --color-gray-800: var(--gray-800);
+  --color-gray-900: var(--gray-900);
+  --color-gray-1000: var(--gray-1000);
+
+  --color-gray-a-100: var(--gray-a-100);
+  --color-gray-a-200: var(--gray-a-200);
+  --color-gray-a-300: var(--gray-a-300);
+  --color-gray-a-400: var(--gray-a-400);
+  --color-gray-a-500: var(--gray-a-500);
+  --color-gray-a-600: var(--gray-a-600);
+
+  --color-blue-100: var(--blue-100);
+  --color-blue-200: var(--blue-200);
+  --color-blue-700: var(--blue-700);
+  --color-blue-800: var(--blue-800);
+  --color-blue-900: var(--blue-900);
+  --color-red-100: var(--red-100);
+  --color-red-200: var(--red-200);
+  --color-red-700: var(--red-700);
+  --color-red-800: var(--red-800);
+  --color-red-900: var(--red-900);
+  --color-amber-100: var(--amber-100);
+  --color-amber-200: var(--amber-200);
+  --color-amber-700: var(--amber-700);
+  --color-amber-800: var(--amber-800);
+  --color-amber-900: var(--amber-900);
+  --color-green-100: var(--green-100);
+  --color-green-200: var(--green-200);
+  --color-green-700: var(--green-700);
+  --color-green-800: var(--green-800);
+  --color-green-900: var(--green-900);
+
+  --shadow-border: 0 0 0 1px var(--gray-a-400);
+  --shadow-border-hover: 0 0 0 1px var(--gray-a-500);
+  --shadow-input-focus: 0 0 0 1px var(--gray-a-600), 0 0 0 4px var(--input-focus-halo);
+  --shadow-focus: 0 0 0 2px var(--bg-100), 0 0 0 4px var(--focus);
+  --shadow-card: 0 0 0 1px var(--hairline), var(--shadow-small);
+  --shadow-menu: 0 0 0 1px var(--hairline), var(--shadow-menu-layers);
+  --shadow-modal: 0 0 0 1px var(--hairline), var(--shadow-modal-layers);
+}
+
+/* Typography scale */
+@utility heading-24 {
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 600;
+  letter-spacing: -0.96px;
+}
+@utility heading-20 {
+  font-size: 20px;
+  line-height: 26px;
+  font-weight: 600;
+  letter-spacing: -0.4px;
+}
+@utility heading-16 {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  letter-spacing: -0.32px;
+}
+@utility heading-14 {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  letter-spacing: -0.28px;
+}
+@utility label-14 {
+  font-size: 14px;
+  line-height: 20px;
+}
+@utility label-13 {
+  font-size: 13px;
+  line-height: 16px;
+}
+@utility label-12 {
+  font-size: 12px;
+  line-height: 16px;
+}
+@utility copy-14 {
+  font-size: 14px;
+  line-height: 20px;
+}
+@utility copy-13 {
+  font-size: 13px;
+  line-height: 18px;
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+  body {
+    @apply bg-bg-200 font-sans text-gray-1000 antialiased;
+    font-size: 14px;
+    line-height: 20px;
+  }
+  ::selection {
+    background: var(--blue-200);
+  }
+  :focus-visible {
+    outline: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0ms !important;
+      animation-duration: 0ms !important;
+    }
+  }
+}

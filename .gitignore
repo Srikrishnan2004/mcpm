@@ -1,0 +1,12 @@
+/target
+node_modules/
+apps/desktop/dist/
+apps/desktop/src-tauri/gen/
+*.mcpm-tmp
+.DS_Store
+Thumbs.db
+.env
+.env.*
+
+# Launch video build output (frames, node_modules junction)
+brag-output*/

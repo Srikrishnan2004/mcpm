@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/mcpm-dev/mcpm/main/catalog/schema/template.schema.json",
+  "title": "mcpm server template",
+  "type": "object",
+  "required": ["id", "name", "transports", "defaultTransport"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+    "name": { "type": "string" },
+    "description": { "type": "string" },
+    "homepage": { "type": "string", "format": "uri" },
+    "tags": { "type": "array", "items": { "type": "string" } },
+    "transports": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": false,
+      "properties": {
+        "stdio": {
+          "type": "object",
+          "required": ["command"],
+          "additionalProperties": false,
+          "properties": {
+            "command": { "type": "string" },
+            "args": { "type": "array", "items": { "type": "string" } },
+            "env": { "type": "object", "additionalProperties": { "type": "string" } }
+          }
+        },
+        "http": {
+          "type": "object",
+          "required": ["url"],
+          "additionalProperties": false,
+          "properties": {
+            "url": { "type": "string" },
+            "headers": { "type": "object", "additionalProperties": { "type": "string" } },
+            "auth": { "enum": ["oauth"] }
+          }
+        }
+      }
+    },
+    "defaultTransport": { "enum": ["stdio", "http"] },
+    "settings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["key", "label", "type"],
+        "additionalProperties": false,
+        "properties": {
+          "key": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" },
+          "label": { "type": "string" },
+          "type": { "enum": ["string", "boolean"] },
+          "required": { "type": "boolean" },
+          "default": {},
+          "help": { "type": "string" }
+        }
+      }
+    },
+    "secrets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["key", "label"],
+        "additionalProperties": false,
+        "properties": {
+          "key": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" },
+          "label": { "type": "string" },
+          "required": { "type": "boolean" },
+          "help": { "type": "string" }
+        }
+      }
+    }
+  }
+}

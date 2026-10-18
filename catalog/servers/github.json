@@ -1,0 +1,24 @@
+{
+  "$schema": "../schema/template.schema.json",
+  "id": "github",
+  "name": "GitHub",
+  "description": "Repositories, issues, pull requests and Actions via GitHub's official MCP server.",
+  "homepage": "https://github.com/github/github-mcp-server",
+  "tags": ["git", "code", "devops"],
+  "transports": {
+    "stdio": {
+      "command": "docker",
+      "args": ["run", "-i", "--rm", "-e", "GITHUB_PERSONAL_ACCESS_TOKEN", "ghcr.io/github/github-mcp-server"],
+      "env": { "GITHUB_PERSONAL_ACCESS_TOKEN": "{{secret:token}}" }
+    },
+    "http": {
+      "url": "https://api.githubcopilot.com/mcp/",
+      "headers": { "Authorization": "Bearer {{secret:token}}" }
+    }
+  },
+  "defaultTransport": "stdio",
+  "settings": [],
+  "secrets": [
+    { "key": "token", "label": "Personal access token", "required": true, "help": "github.com → Settings → Developer settings → Personal access tokens" }
+  ]
+}

@@ -1,0 +1,142 @@
+/*
+ * Design tokens. Visual language follows Vercel's Geist design system
+ * (values taken from vercel.com/geist, 2026-10-18); names are mcpm's own.
+ *
+ * Step semantics for every scale:
+ * 100 bg · 200 hover bg · 300 active bg · 400 border · 500 hover border · 600 active border
+ * 700 solid bg · 800 solid hover · 900 secondary text/icon · 1000 primary text/icon
+ */
+
+:root {
+  color-scheme: light;
+
+  --bg-100: #ffffff;
+  --bg-200: #fafafa;
+
+  --gray-100: #f2f2f2;
+  --gray-200: #ebebeb;
+  --gray-300: #e6e6e6;
+  --gray-400: #ebebeb;
+  --gray-500: #c9c9c9;
+  --gray-600: #a8a8a8;
+  --gray-700: #8f8f8f;
+  --gray-800: #7d7d7d;
+  --gray-900: #4d4d4d;
+  --gray-1000: #171717;
+
+  --gray-a-100: #0000000d;
+  --gray-a-200: #00000014;
+  --gray-a-300: #0000001a;
+  --gray-a-400: #00000014;
+  --gray-a-500: #00000036;
+  --gray-a-600: #00000057;
+  --gray-a-700: #00000070;
+  --gray-a-800: #00000082;
+  --gray-a-900: #000000b3;
+  --gray-a-1000: #000000e8;
+
+  --blue-100: #f0f7ff;
+  --blue-200: #ebf5ff;
+  --blue-700: #0072f5;
+  --blue-800: #0062d1;
+  --blue-900: #0068d6;
+  --blue-1000: #00254c;
+
+  --red-100: #fff0f0;
+  --red-200: #ffebeb;
+  --red-700: #e5484d;
+  --red-800: #da2f35;
+  --red-900: #cb2a2f;
+  --red-1000: #391417;
+
+  --amber-100: #fff6e5;
+  --amber-200: #fff4d6;
+  --amber-700: #ffb224;
+  --amber-800: #ff990a;
+  --amber-900: #a35200;
+  --amber-1000: #4e2009;
+
+  --green-100: #effbef;
+  --green-200: #ebfaeb;
+  --green-700: #45a557;
+  --green-800: #398e4a;
+  --green-900: #297a3a;
+  --green-1000: #1b311e;
+
+  --primary-hover: #383838;
+  --focus: var(--blue-700);
+  --hairline: #00000014;
+  --input-focus-halo: #00000029;
+
+  --shadow-small: 0 2px 2px #0000000a;
+  --shadow-medium: 0 2px 2px #0000000a, 0 8px 8px -8px #0000000a;
+  --shadow-menu-layers: 0 1px 1px #00000005, 0 4px 8px -4px #0000000a, 0 16px 24px -8px #0000000f;
+  --shadow-modal-layers: 0 1px 1px #00000005, 0 8px 16px -4px #0000000a, 0 24px 32px -8px #0000000f;
+}
+
+:root.dark {
+  color-scheme: dark;
+
+  --bg-100: #0a0a0a;
+  --bg-200: #000000;
+
+  --gray-100: #1a1a1a;
+  --gray-200: #1f1f1f;
+  --gray-300: #292929;
+  --gray-400: #2e2e2e;
+  --gray-500: #454545;
+  --gray-600: #878787;
+  --gray-700: #8f8f8f;
+  --gray-800: #7d7d7d;
+  --gray-900: #a1a1a1;
+  --gray-1000: #ededed;
+
+  --gray-a-100: #ffffff0f;
+  --gray-a-200: #ffffff17;
+  --gray-a-300: #ffffff21;
+  --gray-a-400: #ffffff24;
+  --gray-a-500: #ffffff3d;
+  --gray-a-600: #ffffff82;
+  --gray-a-700: #ffffff8a;
+  --gray-a-800: #ffffff78;
+  --gray-a-900: #ffffff9c;
+  --gray-a-1000: #ffffffeb;
+
+  --blue-100: #0f1c2e;
+  --blue-200: #10233d;
+  --blue-700: #0072f5;
+  --blue-800: #0062d1;
+  --blue-900: #52a8ff;
+  --blue-1000: #ebf6ff;
+
+  --red-100: #2a1314;
+  --red-200: #3c1618;
+  --red-700: #e5484d;
+  --red-800: #d93036;
+  --red-900: #ff6166;
+  --red-1000: #feecee;
+
+  --amber-100: #291800;
+  --amber-200: #331b00;
+  --amber-700: #ffb224;
+  --amber-800: #ff990a;
+  --amber-900: #f2a20d;
+  --amber-1000: #fef3dc;
+
+  --green-100: #0b2212;
+  --green-200: #0f2e18;
+  --green-700: #45a557;
+  --green-800: #398e4a;
+  --green-900: #62c073;
+  --green-1000: #e5fbea;
+
+  --primary-hover: #cccccc;
+  --focus: var(--blue-900);
+  --hairline: #ffffff25;
+  --input-focus-halo: #ffffff3d;
+
+  --shadow-small: 0 1px 2px #00000029;
+  --shadow-medium: 0 2px 2px #00000052, 0 8px 8px -8px #00000029;
+  --shadow-menu-layers: 0 1px 1px #00000029, 0 4px 8px -4px #0000003d, 0 16px 24px -8px #00000052;
+  --shadow-modal-layers: 0 1px 1px #00000029, 0 8px 16px -4px #0000003d, 0 24px 32px -8px #00000052;
+}

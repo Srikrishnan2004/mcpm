@@ -1,0 +1,19 @@
+{
+  "$schema": "../schema/template.schema.json",
+  "id": "filesystem",
+  "name": "Filesystem",
+  "description": "Read and write files inside one allowed directory.",
+  "homepage": "https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem",
+  "tags": ["files", "local"],
+  "transports": {
+    "stdio": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "{{root}}"]
+    }
+  },
+  "defaultTransport": "stdio",
+  "settings": [
+    { "key": "root", "label": "Allowed directory", "type": "string", "required": true }
+  ],
+  "secrets": []
+}

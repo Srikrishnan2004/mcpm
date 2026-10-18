@@ -1,0 +1,26 @@
+[workspace]
+resolver = "2"
+members = ["crates/core", "crates/cli", "apps/desktop/src-tauri"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/mcpm-dev/mcpm"
+rust-version = "1.80"
+
+[workspace.dependencies]
+mcpm-core = { path = "crates/core" }
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1", features = ["preserve_order"] }
+thiserror = "2"
+dirs = "6"
+chrono = { version = "0.4", default-features = false, features = ["clock", "std"] }
+keyring = { version = "3", features = ["apple-native", "windows-native", "sync-secret-service"] }
+which = "7"
+clap = { version = "4", features = ["derive"] }
+
+[profile.release]
+lto = true
+codegen-units = 1
+strip = true

@@ -1,0 +1,32 @@
+{
+  "$schema": "../schema/template.schema.json",
+  "id": "supabase",
+  "name": "Supabase",
+  "description": "Query and manage Supabase projects: tables, SQL, migrations, edge functions, logs.",
+  "homepage": "https://supabase.com/docs/guides/getting-started/mcp",
+  "tags": ["database", "postgres", "backend"],
+  "transports": {
+    "stdio": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@supabase/mcp-server-supabase@latest",
+        "--project-ref={{project_ref}}",
+        "{{#read_only}}--read-only{{/read_only}}"
+      ],
+      "env": { "SUPABASE_ACCESS_TOKEN": "{{secret:access_token}}" }
+    },
+    "http": {
+      "url": "https://mcp.supabase.com/mcp?project_ref={{project_ref}}{{#read_only}}&read_only=true{{/read_only}}",
+      "auth": "oauth"
+    }
+  },
+  "defaultTransport": "stdio",
+  "settings": [
+    { "key": "project_ref", "label": "Project ref", "type": "string", "required": true, "help": "Project Settings → General → Project ID" },
+    { "key": "read_only", "label": "Read-only", "type": "boolean", "default": true }
+  ],
+  "secrets": [
+    { "key": "access_token", "label": "Personal access token", "required": true, "help": "Supabase dashboard → Account → Access Tokens" }
+  ]
+}
