@@ -1,0 +1,24 @@
+{
+  "$schema": "../schema/template.schema.json",
+  "id": "perplexity",
+  "name": "Perplexity",
+  "description": "Web-grounded search, Q&A, reasoning and deep research via Perplexity's Sonar API.",
+  "homepage": "https://github.com/perplexityai/modelcontextprotocol",
+  "tags": ["search", "web", "research", "ai"],
+  "transports": {
+    "stdio": {
+      "command": "npx",
+      "args": ["-y", "@perplexity-ai/mcp-server"],
+      "env": { "PERPLEXITY_API_KEY": "{{secret:api_key}}" }
+    },
+    "http": {
+      "url": "https://api.perplexity.ai/mcp",
+      "headers": { "Authorization": "Bearer {{secret:api_key}}" }
+    }
+  },
+  "defaultTransport": "stdio",
+  "settings": [],
+  "secrets": [
+    { "key": "api_key", "label": "Perplexity API key", "required": true, "help": "perplexity.ai → Settings → API → API Keys" }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "../schema/template.schema.json",
+  "id": "aws-documentation",
+  "name": "AWS Documentation",
+  "description": "Search, read and get recommendations from AWS documentation via AWS Labs' MCP server. No AWS credentials needed.",
+  "homepage": "https://github.com/awslabs/mcp/tree/main/src/aws-documentation-mcp-server",
+  "tags": ["aws", "docs", "cloud"],
+  "transports": {
+    "stdio": {
+      "command": "uvx",
+      "args": ["awslabs.aws-documentation-mcp-server@latest"],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR",
+        "AWS_DOCUMENTATION_PARTITION": "{{partition}}"
+      }
+    }
+  },
+  "defaultTransport": "stdio",
+  "settings": [
+    { "key": "partition", "label": "Documentation partition", "type": "string", "default": "aws", "help": "aws (global) or aws-cn (China)" }
+  ],
+  "secrets": []
+}

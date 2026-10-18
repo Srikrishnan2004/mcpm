@@ -1,0 +1,28 @@
+{
+  "$schema": "../schema/template.schema.json",
+  "id": "firebase",
+  "name": "Firebase",
+  "description": "Manage Firebase projects, Auth, Firestore, Storage and more via the Firebase CLI's built-in MCP server.",
+  "homepage": "https://firebase.google.com/docs/ai-assistance/mcp-server",
+  "tags": ["backend", "google", "database"],
+  "transports": {
+    "stdio": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "firebase-tools@latest",
+        "mcp",
+        "{{#project_dir}}--dir{{/project_dir}}",
+        "{{#project_dir}}{{project_dir}}{{/project_dir}}",
+        "{{#only}}--only{{/only}}",
+        "{{#only}}{{only}}{{/only}}"
+      ]
+    }
+  },
+  "defaultTransport": "stdio",
+  "settings": [
+    { "key": "project_dir", "label": "Project directory", "type": "string", "help": "Absolute path to a folder containing firebase.json. Leave empty to use the server's working directory." },
+    { "key": "only", "label": "Feature groups", "type": "string", "help": "Comma-separated list to limit tools, e.g. auth,firestore,storage. Leave empty for all." }
+  ],
+  "secrets": []
+}

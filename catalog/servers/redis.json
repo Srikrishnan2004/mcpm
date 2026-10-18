@@ -1,0 +1,33 @@
+{
+  "$schema": "../schema/template.schema.json",
+  "id": "redis",
+  "name": "Redis",
+  "description": "Work with Redis data structures, search and JSON via Redis's official MCP server.",
+  "homepage": "https://github.com/redis/mcp-redis",
+  "tags": ["database", "cache", "redis"],
+  "transports": {
+    "stdio": {
+      "command": "uvx",
+      "args": ["--from", "redis-mcp-server@latest", "redis-mcp-server"],
+      "env": {
+        "REDIS_HOST": "{{host}}",
+        "REDIS_PORT": "{{port}}",
+        "REDIS_DB": "{{db}}",
+        "REDIS_USERNAME": "{{username}}",
+        "REDIS_PWD": "{{secret:password}}",
+        "REDIS_SSL": "{{ssl}}"
+      }
+    }
+  },
+  "defaultTransport": "stdio",
+  "settings": [
+    { "key": "host", "label": "Host", "type": "string", "default": "127.0.0.1" },
+    { "key": "port", "label": "Port", "type": "string", "default": "6379" },
+    { "key": "db", "label": "Database index", "type": "string", "default": "0" },
+    { "key": "username", "label": "Username", "type": "string", "default": "default", "help": "Redis ACL user; Redis Cloud: Database → Security → Default user" },
+    { "key": "ssl", "label": "Use TLS", "type": "boolean", "default": false }
+  ],
+  "secrets": [
+    { "key": "password", "label": "Password", "required": true, "help": "Redis ACL password. Redis Cloud: Database → Security → Default user password." }
+  ]
+}

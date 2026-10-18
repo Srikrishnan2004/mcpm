@@ -1,0 +1,24 @@
+{
+  "$schema": "../schema/template.schema.json",
+  "id": "hugging-face",
+  "name": "Hugging Face",
+  "description": "Search models, datasets, Spaces, papers and docs on the Hugging Face Hub and use MCP-enabled Spaces.",
+  "homepage": "https://huggingface.co/docs/hub/en/hf-mcp-server",
+  "tags": ["ai", "ml", "models"],
+  "transports": {
+    "stdio": {
+      "command": "npx",
+      "args": ["-y", "@llmindset/hf-mcp-server"],
+      "env": { "DEFAULT_HF_TOKEN": "{{secret:token}}" }
+    },
+    "http": {
+      "url": "https://huggingface.co/mcp",
+      "headers": { "Authorization": "Bearer {{secret:token}}" }
+    }
+  },
+  "defaultTransport": "stdio",
+  "settings": [],
+  "secrets": [
+    { "key": "token", "label": "Access token", "required": true, "help": "huggingface.co → Settings → Access Tokens (hf_...)" }
+  ]
+}

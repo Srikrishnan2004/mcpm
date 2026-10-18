@@ -1,0 +1,17 @@
+{
+  "$schema": "../schema/template.schema.json",
+  "id": "sequential-thinking",
+  "name": "Sequential Thinking",
+  "description": "Structured, step-by-step reflective problem solving with revisable and branching thoughts.",
+  "homepage": "https://github.com/modelcontextprotocol/servers/tree/main/src/sequentialthinking",
+  "tags": ["reasoning", "local"],
+  "transports": {
+    "stdio": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"]
+    }
+  },
+  "defaultTransport": "stdio",
+  "settings": [],
+  "secrets": []
+}

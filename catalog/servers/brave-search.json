@@ -1,0 +1,20 @@
+{
+  "$schema": "../schema/template.schema.json",
+  "id": "brave-search",
+  "name": "Brave Search",
+  "description": "Web, local, image, video and news search plus summarization via Brave's official Search API server.",
+  "homepage": "https://github.com/brave/brave-search-mcp-server",
+  "tags": ["search", "web"],
+  "transports": {
+    "stdio": {
+      "command": "npx",
+      "args": ["-y", "@brave/brave-search-mcp-server", "--transport", "stdio"],
+      "env": { "BRAVE_API_KEY": "{{secret:api_key}}" }
+    }
+  },
+  "defaultTransport": "stdio",
+  "settings": [],
+  "secrets": [
+    { "key": "api_key", "label": "Brave Search API key", "required": true, "help": "brave.com/search/api → sign up → API keys" }
+  ]
+}

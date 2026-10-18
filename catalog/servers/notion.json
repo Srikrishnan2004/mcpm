@@ -1,0 +1,21 @@
+{
+  "$schema": "../schema/template.schema.json",
+  "id": "notion",
+  "name": "Notion",
+  "description": "Read and update the Notion content you can access via Notion's hosted MCP server.",
+  "homepage": "https://developers.notion.com/docs/mcp",
+  "tags": ["docs", "notes", "productivity"],
+  "transports": {
+    "stdio": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://mcp.notion.com/mcp"]
+    },
+    "http": {
+      "url": "https://mcp.notion.com/mcp",
+      "auth": "oauth"
+    }
+  },
+  "defaultTransport": "stdio",
+  "settings": [],
+  "secrets": []
+}

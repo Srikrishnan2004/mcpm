@@ -1,0 +1,26 @@
+{
+  "$schema": "../schema/template.schema.json",
+  "id": "mongodb",
+  "name": "MongoDB",
+  "description": "Query and manage MongoDB databases and collections via MongoDB's official MCP server.",
+  "homepage": "https://github.com/mongodb-js/mongodb-mcp-server",
+  "tags": ["database", "nosql", "mongodb"],
+  "transports": {
+    "stdio": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mongodb-mcp-server@latest",
+        "{{#read_only}}--readOnly{{/read_only}}"
+      ],
+      "env": { "MDB_MCP_CONNECTION_STRING": "{{secret:connection_string}}" }
+    }
+  },
+  "defaultTransport": "stdio",
+  "settings": [
+    { "key": "read_only", "label": "Read-only", "type": "boolean", "default": true }
+  ],
+  "secrets": [
+    { "key": "connection_string", "label": "Connection string", "required": true, "help": "mongodb:// or mongodb+srv:// URI. Atlas: Database → Connect → Drivers." }
+  ]
+}

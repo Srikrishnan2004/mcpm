@@ -1,0 +1,21 @@
+{
+  "$schema": "../schema/template.schema.json",
+  "id": "cloudflare",
+  "name": "Cloudflare",
+  "description": "Access the Cloudflare API (Workers, DNS, R2, D1, KV and more) via Cloudflare's official hosted API MCP server.",
+  "homepage": "https://github.com/cloudflare/mcp",
+  "tags": ["cloud", "edge", "devops"],
+  "transports": {
+    "stdio": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://mcp.cloudflare.com/mcp"]
+    },
+    "http": {
+      "url": "https://mcp.cloudflare.com/mcp",
+      "auth": "oauth"
+    }
+  },
+  "defaultTransport": "stdio",
+  "settings": [],
+  "secrets": []
+}

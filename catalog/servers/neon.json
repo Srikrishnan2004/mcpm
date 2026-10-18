@@ -1,0 +1,27 @@
+{
+  "$schema": "../schema/template.schema.json",
+  "id": "neon",
+  "name": "Neon",
+  "description": "Manage Neon serverless Postgres: projects, branches, migrations and SQL via Neon's hosted MCP server.",
+  "homepage": "https://github.com/neondatabase/mcp-server-neon",
+  "tags": ["database", "postgres", "serverless"],
+  "transports": {
+    "stdio": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://mcp.neon.tech/mcp{{#read_only}}?readonly=true{{/read_only}}"
+      ]
+    },
+    "http": {
+      "url": "https://mcp.neon.tech/mcp{{#read_only}}?readonly=true{{/read_only}}",
+      "auth": "oauth"
+    }
+  },
+  "defaultTransport": "stdio",
+  "settings": [
+    { "key": "read_only", "label": "Read-only", "type": "boolean", "default": true, "help": "Exposes read-only tools; run_sql executes in a READ ONLY transaction." }
+  ],
+  "secrets": []
+}

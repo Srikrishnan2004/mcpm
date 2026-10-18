@@ -1,0 +1,23 @@
+{
+  "$schema": "../schema/template.schema.json",
+  "id": "gitlab",
+  "name": "GitLab",
+  "description": "Connect AI tools and applications to your GitLab instance via GitLab's official MCP server.",
+  "homepage": "https://docs.gitlab.com/user/model_context_protocol/mcp_server/",
+  "tags": ["git", "code", "devops"],
+  "transports": {
+    "stdio": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://{{host}}/api/v4/mcp"]
+    },
+    "http": {
+      "url": "https://{{host}}/api/v4/mcp",
+      "auth": "oauth"
+    }
+  },
+  "defaultTransport": "stdio",
+  "settings": [
+    { "key": "host", "label": "GitLab host", "type": "string", "required": true, "default": "gitlab.com", "help": "gitlab.com or your self-managed/Dedicated hostname (no scheme). An admin must allow MCP access for the group or instance." }
+  ],
+  "secrets": []
+}

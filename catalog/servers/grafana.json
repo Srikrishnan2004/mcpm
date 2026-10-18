@@ -1,0 +1,26 @@
+{
+  "$schema": "../schema/template.schema.json",
+  "id": "grafana",
+  "name": "Grafana",
+  "description": "Search dashboards, query datasources (Prometheus, Loki, ...), and manage alerts and incidents in Grafana.",
+  "homepage": "https://github.com/grafana/mcp-grafana",
+  "tags": ["observability", "monitoring", "devops"],
+  "transports": {
+    "stdio": {
+      "command": "uvx",
+      "args": ["mcp-grafana", "{{#read_only}}--disable-write{{/read_only}}"],
+      "env": {
+        "GRAFANA_URL": "{{url}}",
+        "GRAFANA_SERVICE_ACCOUNT_TOKEN": "{{secret:service_account_token}}"
+      }
+    }
+  },
+  "defaultTransport": "stdio",
+  "settings": [
+    { "key": "url", "label": "Grafana URL", "type": "string", "required": true, "help": "e.g. http://localhost:3000 or https://<stack>.grafana.net" },
+    { "key": "read_only", "label": "Read-only", "type": "boolean", "default": false }
+  ],
+  "secrets": [
+    { "key": "service_account_token", "label": "Service account token", "required": true, "help": "Grafana → Administration → Users and access → Service accounts → Add token" }
+  ]
+}

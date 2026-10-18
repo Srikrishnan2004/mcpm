@@ -1,0 +1,20 @@
+{
+  "$schema": "../schema/template.schema.json",
+  "id": "heroku",
+  "name": "Heroku",
+  "description": "Manage Heroku apps, dynos, add-ons, Postgres and pipelines via Heroku's official MCP server.",
+  "homepage": "https://github.com/heroku/heroku-mcp-server",
+  "tags": ["deployment", "hosting", "devops"],
+  "transports": {
+    "stdio": {
+      "command": "npx",
+      "args": ["-y", "@heroku/mcp-server"],
+      "env": { "HEROKU_API_KEY": "{{secret:api_key}}" }
+    }
+  },
+  "defaultTransport": "stdio",
+  "settings": [],
+  "secrets": [
+    { "key": "api_key", "label": "API key / authorization token", "required": true, "help": "Run `heroku authorizations:create`, or dashboard → Account settings → API Key" }
+  ]
+}

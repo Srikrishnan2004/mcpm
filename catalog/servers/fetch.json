@@ -1,0 +1,26 @@
+{
+  "$schema": "../schema/template.schema.json",
+  "id": "fetch",
+  "name": "Fetch",
+  "description": "Fetch web pages and convert them to markdown for the model to read.",
+  "homepage": "https://github.com/modelcontextprotocol/servers/tree/main/src/fetch",
+  "tags": ["web", "http"],
+  "transports": {
+    "stdio": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-fetch",
+        "{{#ignore_robots_txt}}--ignore-robots-txt{{/ignore_robots_txt}}",
+        "{{#allow_private_ips}}--allow-private-ips{{/allow_private_ips}}",
+        "{{#user_agent}}--user-agent={{user_agent}}{{/user_agent}}"
+      ]
+    }
+  },
+  "defaultTransport": "stdio",
+  "settings": [
+    { "key": "ignore_robots_txt", "label": "Ignore robots.txt", "type": "boolean", "default": false, "help": "By default robots.txt is obeyed for model-initiated requests" },
+    { "key": "allow_private_ips", "label": "Allow private IPs", "type": "boolean", "default": false, "help": "Disables the guard that blocks loopback, private and link-local addresses" },
+    { "key": "user_agent", "label": "Custom User-Agent", "type": "string", "help": "Leave empty to use the default User-Agent" }
+  ],
+  "secrets": []
+}

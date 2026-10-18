@@ -1,0 +1,29 @@
+{
+  "$schema": "../schema/template.schema.json",
+  "id": "chrome-devtools",
+  "name": "Chrome DevTools",
+  "description": "Lets your coding agent control and inspect a live Chrome browser using Chrome DevTools.",
+  "homepage": "https://github.com/ChromeDevTools/chrome-devtools-mcp",
+  "tags": ["browser", "debugging", "performance"],
+  "transports": {
+    "stdio": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "chrome-devtools-mcp@latest",
+        "{{#headless}}--headless=true{{/headless}}",
+        "{{#isolated}}--isolated=true{{/isolated}}",
+        "{{#channel}}--channel={{channel}}{{/channel}}",
+        "{{#browser_url}}--browserUrl={{browser_url}}{{/browser_url}}"
+      ]
+    }
+  },
+  "defaultTransport": "stdio",
+  "settings": [
+    { "key": "headless", "label": "Headless", "type": "boolean", "default": false, "help": "Run Chrome without a UI." },
+    { "key": "isolated", "label": "Isolated profile", "type": "boolean", "default": false, "help": "Use a temporary user-data-dir that is cleaned up when the browser closes." },
+    { "key": "channel", "label": "Chrome channel", "type": "string", "help": "Optional: stable, beta, dev or canary. Defaults to stable." },
+    { "key": "browser_url", "label": "Browser URL", "type": "string", "help": "Optional: connect to a running, debuggable Chrome instance, e.g. http://127.0.0.1:9222" }
+  ],
+  "secrets": []
+}

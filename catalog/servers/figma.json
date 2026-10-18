@@ -1,0 +1,21 @@
+{
+  "$schema": "../schema/template.schema.json",
+  "id": "figma",
+  "name": "Figma",
+  "description": "Design context, variables, components and code generation from Figma files via Figma's official MCP server.",
+  "homepage": "https://developers.figma.com/docs/figma-mcp-server/",
+  "tags": ["design", "ui", "frontend"],
+  "transports": {
+    "stdio": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "http://127.0.0.1:3845/mcp"]
+    },
+    "http": {
+      "url": "https://mcp.figma.com/mcp",
+      "auth": "oauth"
+    }
+  },
+  "defaultTransport": "stdio",
+  "settings": [],
+  "secrets": []
+}

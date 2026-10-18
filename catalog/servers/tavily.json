@@ -1,0 +1,24 @@
+{
+  "$schema": "../schema/template.schema.json",
+  "id": "tavily",
+  "name": "Tavily",
+  "description": "Real-time web search, extract, map and crawl via Tavily's search API.",
+  "homepage": "https://github.com/tavily-ai/tavily-mcp",
+  "tags": ["search", "web", "research"],
+  "transports": {
+    "stdio": {
+      "command": "npx",
+      "args": ["-y", "tavily-mcp@latest"],
+      "env": { "TAVILY_API_KEY": "{{secret:api_key}}" }
+    },
+    "http": {
+      "url": "https://mcp.tavily.com/mcp/",
+      "headers": { "Authorization": "Bearer {{secret:api_key}}" }
+    }
+  },
+  "defaultTransport": "stdio",
+  "settings": [],
+  "secrets": [
+    { "key": "api_key", "label": "Tavily API key", "required": true, "help": "app.tavily.com → API Keys (starts with tvly-)" }
+  ]
+}

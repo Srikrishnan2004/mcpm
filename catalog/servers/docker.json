@@ -1,0 +1,19 @@
+{
+  "$schema": "../schema/template.schema.json",
+  "id": "docker",
+  "name": "Docker MCP Gateway",
+  "description": "Expose the MCP servers enabled in Docker's MCP Toolkit (catalog incl. Docker Hub) through one gateway.",
+  "homepage": "https://github.com/docker/mcp-gateway",
+  "tags": ["docker", "containers", "gateway"],
+  "transports": {
+    "stdio": {
+      "command": "docker",
+      "args": ["mcp", "gateway", "run", "{{#profile}}--profile={{profile}}{{/profile}}"]
+    }
+  },
+  "defaultTransport": "stdio",
+  "settings": [
+    { "key": "profile", "label": "Profile", "type": "string", "help": "Optional MCP Toolkit profile; leave empty for the default profile" }
+  ],
+  "secrets": []
+}

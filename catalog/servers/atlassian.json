@@ -1,0 +1,21 @@
+{
+  "$schema": "../schema/template.schema.json",
+  "id": "atlassian",
+  "name": "Atlassian (Jira & Confluence)",
+  "description": "Work with Jira and Confluence Cloud data via Atlassian's official Rovo MCP server.",
+  "homepage": "https://support.atlassian.com/atlassian-rovo-mcp-server/docs/getting-started-with-the-atlassian-remote-mcp-server/",
+  "tags": ["jira", "confluence", "project-management"],
+  "transports": {
+    "stdio": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://mcp.atlassian.com/v2/mcp"]
+    },
+    "http": {
+      "url": "https://mcp.atlassian.com/v2/mcp",
+      "auth": "oauth"
+    }
+  },
+  "defaultTransport": "stdio",
+  "settings": [],
+  "secrets": []
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "../schema/template.schema.json",
+  "id": "linear",
+  "name": "Linear",
+  "description": "Find, create and update Linear issues, projects and comments via Linear's hosted MCP server.",
+  "homepage": "https://linear.app/docs/mcp",
+  "tags": ["issues", "project-management"],
+  "transports": {
+    "stdio": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://mcp.linear.app/mcp{{#read_only}}/readonly{{/read_only}}"]
+    },
+    "http": {
+      "url": "https://mcp.linear.app/mcp{{#read_only}}/readonly{{/read_only}}",
+      "auth": "oauth"
+    }
+  },
+  "defaultTransport": "stdio",
+  "settings": [
+    { "key": "read_only", "label": "Read-only", "type": "boolean", "default": false, "help": "Use Linear's read-only endpoint." }
+  ],
+  "secrets": []
+}

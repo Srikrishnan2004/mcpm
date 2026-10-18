@@ -1,0 +1,30 @@
+{
+  "$schema": "../schema/template.schema.json",
+  "id": "stripe",
+  "name": "Stripe",
+  "description": "Customers, payments, subscriptions, invoices and Stripe docs search via Stripe's official MCP server.",
+  "homepage": "https://docs.stripe.com/mcp",
+  "tags": ["payments", "billing", "api"],
+  "transports": {
+    "stdio": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@stripe/mcp",
+        "{{#stripe_account}}--stripe-account={{stripe_account}}{{/stripe_account}}"
+      ],
+      "env": { "STRIPE_SECRET_KEY": "{{secret:api_key}}" }
+    },
+    "http": {
+      "url": "https://mcp.stripe.com",
+      "auth": "oauth"
+    }
+  },
+  "defaultTransport": "stdio",
+  "settings": [
+    { "key": "stripe_account", "label": "Connected account ID", "type": "string", "help": "Optional acct_… ID to act as a Connect connected account." }
+  ],
+  "secrets": [
+    { "key": "api_key", "label": "Agent / restricted API key", "required": true, "help": "Stripe Dashboard → Developers → API keys. Prefer an agent (or restricted) key with only the permissions you need; use a sandbox key for testing." }
+  ]
+}

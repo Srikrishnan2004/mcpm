@@ -1,0 +1,20 @@
+{
+  "$schema": "../schema/template.schema.json",
+  "id": "memory",
+  "name": "Memory",
+  "description": "Persistent knowledge-graph memory (entities, relations, observations) stored in a local JSONL file.",
+  "homepage": "https://github.com/modelcontextprotocol/servers/tree/main/src/memory",
+  "tags": ["memory", "knowledge-graph", "local"],
+  "transports": {
+    "stdio": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-memory"],
+      "env": { "MEMORY_FILE_PATH": "{{memory_file_path}}" }
+    }
+  },
+  "defaultTransport": "stdio",
+  "settings": [
+    { "key": "memory_file_path", "label": "Memory file", "type": "string", "required": true, "help": "Absolute path to a .jsonl file that stores the graph, e.g. C:\\Users\\you\\mcp\\memory.jsonl" }
+  ],
+  "secrets": []
+}

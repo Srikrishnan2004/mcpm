@@ -1,0 +1,24 @@
+{
+  "$schema": "../schema/template.schema.json",
+  "id": "airtable",
+  "name": "Airtable",
+  "description": "Query bases, create and update records, and manage schemas via Airtable's official remote MCP.",
+  "homepage": "https://airtable.com/developers/agents/mcp/getting-started",
+  "tags": ["database", "spreadsheet", "productivity"],
+  "transports": {
+    "stdio": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://mcp.airtable.com/mcp", "--header", "Authorization:${AUTH_HEADER}"],
+      "env": { "AUTH_HEADER": "Bearer {{secret:token}}" }
+    },
+    "http": {
+      "url": "https://mcp.airtable.com/mcp",
+      "headers": { "Authorization": "Bearer {{secret:token}}" }
+    }
+  },
+  "defaultTransport": "stdio",
+  "settings": [],
+  "secrets": [
+    { "key": "token", "label": "Personal access token", "required": true, "help": "airtable.com/create/tokens; scopes: data.records:read/write, schema.bases:read/write, data.recordComments:read/write, workspacesAndBases:read" }
+  ]
+}

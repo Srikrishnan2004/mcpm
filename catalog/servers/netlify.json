@@ -1,0 +1,17 @@
+{
+  "$schema": "../schema/template.schema.json",
+  "id": "netlify",
+  "name": "Netlify",
+  "description": "Create, deploy and manage Netlify sites, extensions and environment variables.",
+  "homepage": "https://github.com/netlify/netlify-mcp",
+  "tags": ["deployment", "hosting", "devops"],
+  "transports": {
+    "stdio": {
+      "command": "npx",
+      "args": ["-y", "@netlify/mcp"]
+    }
+  },
+  "defaultTransport": "stdio",
+  "settings": [],
+  "secrets": []
+}

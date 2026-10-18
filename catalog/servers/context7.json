@@ -1,0 +1,20 @@
+{
+  "$schema": "../schema/template.schema.json",
+  "id": "context7",
+  "name": "Context7",
+  "description": "Up-to-date, version-specific library documentation and code examples for AI coding agents.",
+  "homepage": "https://github.com/upstash/context7",
+  "tags": ["docs", "code", "libraries"],
+  "transports": {
+    "stdio": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"]
+    },
+    "http": {
+      "url": "https://mcp.context7.com/mcp"
+    }
+  },
+  "defaultTransport": "stdio",
+  "settings": [],
+  "secrets": []
+}

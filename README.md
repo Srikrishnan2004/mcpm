@@ -30,7 +30,23 @@ Early scaffold (v0.1). Working today:
 - Core: registry, catalog, keychain secrets, template rendering, project sync with backups + ownership manifest
 - Adapters: Claude Code, Claude Desktop, Cursor, VS Code, Windsurf/Devin, Antigravity, Gemini CLI (JSON). Codex (TOML) is next.
 - CLI: `mcpm run | list | clients | secret-set | sync`
+- Catalog: 38 server templates (see below)
 - Desktop UI: Overview, Projects (bind / remap / unbind), Instances, Clients, Catalog
+
+## Catalog
+
+Built-in templates in [`catalog/servers/`](catalog/servers), each pointing at the vendor's official server where one exists:
+
+| Area | Servers |
+|---|---|
+| Code & dev tools | GitHub, GitLab, Sentry, Linear, Atlassian (Jira/Confluence), Context7, Playwright, Chrome DevTools, Git |
+| Databases & backend | Supabase, Postgres, Neon, MongoDB, Redis, Firebase, Airtable |
+| Cloud & deploy | Cloudflare, Vercel, Netlify, Heroku, Docker, AWS Documentation, Grafana, Stripe |
+| Search & web | Brave Search, Exa, Tavily, Perplexity, Firecrawl, Fetch |
+| Productivity & AI | Notion, Slack, Figma, Hugging Face |
+| Utilities | Filesystem, Memory, Sequential Thinking, Time |
+
+Requirements by launcher: `npx` needs Node 20+; `uvx` (Fetch, Git, Time, Postgres, Redis, Grafana, AWS Documentation) needs [uv](https://docs.astral.sh/uv/); Docker and GitHub need Docker. Remote OAuth servers (Linear, Notion, Atlassian, GitLab, Neon, Cloudflare, Vercel) run through [`mcp-remote`](https://github.com/geelen/mcp-remote) and open a browser sign-in on first launch. Figma needs the Figma desktop app with its MCP server enabled.
 
 ## Development
 

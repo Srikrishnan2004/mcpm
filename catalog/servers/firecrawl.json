@@ -1,0 +1,24 @@
+{
+  "$schema": "../schema/template.schema.json",
+  "id": "firecrawl",
+  "name": "Firecrawl",
+  "description": "Scrape, crawl, map, search and extract structured data from websites with Firecrawl.",
+  "homepage": "https://github.com/firecrawl/firecrawl-mcp-server",
+  "tags": ["scraping", "web", "search"],
+  "transports": {
+    "stdio": {
+      "command": "npx",
+      "args": ["-y", "firecrawl-mcp"],
+      "env": { "FIRECRAWL_API_KEY": "{{secret:api_key}}" }
+    },
+    "http": {
+      "url": "https://mcp.firecrawl.dev/v2/mcp",
+      "headers": { "Authorization": "Bearer {{secret:api_key}}" }
+    }
+  },
+  "defaultTransport": "stdio",
+  "settings": [],
+  "secrets": [
+    { "key": "api_key", "label": "Firecrawl API key", "required": true, "help": "firecrawl.dev → Dashboard → API Keys (starts with fc-)" }
+  ]
+}

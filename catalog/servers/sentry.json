@@ -1,0 +1,30 @@
+{
+  "$schema": "../schema/template.schema.json",
+  "id": "sentry",
+  "name": "Sentry",
+  "description": "Access Sentry issues, errors, projects and organizations via Sentry's official MCP server.",
+  "homepage": "https://github.com/getsentry/sentry-mcp",
+  "tags": ["monitoring", "errors", "devops"],
+  "transports": {
+    "stdio": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@sentry/mcp-server@latest",
+        "{{#host}}--host={{host}}{{/host}}"
+      ],
+      "env": { "SENTRY_ACCESS_TOKEN": "{{secret:access_token}}" }
+    },
+    "http": {
+      "url": "https://mcp.sentry.dev/mcp",
+      "auth": "oauth"
+    }
+  },
+  "defaultTransport": "stdio",
+  "settings": [
+    { "key": "host", "label": "Self-hosted host", "type": "string", "help": "Optional, self-hosted Sentry only: hostname without scheme, e.g. sentry.example.com. Leave empty for sentry.io." }
+  ],
+  "secrets": [
+    { "key": "access_token", "label": "User auth token", "required": true, "help": "Sentry → User Settings → Personal Tokens. Scopes: org:read, project:read, project:write, team:read, team:write, event:write" }
+  ]
+}

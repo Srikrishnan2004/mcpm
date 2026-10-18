@@ -1,0 +1,19 @@
+{
+  "$schema": "../schema/template.schema.json",
+  "id": "time",
+  "name": "Time",
+  "description": "Current time and timezone conversion using IANA timezone names.",
+  "homepage": "https://github.com/modelcontextprotocol/servers/tree/main/src/time",
+  "tags": ["time", "utility", "local"],
+  "transports": {
+    "stdio": {
+      "command": "uvx",
+      "args": ["mcp-server-time", "{{#local_timezone}}--local-timezone={{local_timezone}}{{/local_timezone}}"]
+    }
+  },
+  "defaultTransport": "stdio",
+  "settings": [
+    { "key": "local_timezone", "label": "Local timezone", "type": "string", "help": "Exact IANA name, case-sensitive (e.g. America/New_York); leave empty to auto-detect" }
+  ],
+  "secrets": []
+}

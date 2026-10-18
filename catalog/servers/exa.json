@@ -1,0 +1,24 @@
+{
+  "$schema": "../schema/template.schema.json",
+  "id": "exa",
+  "name": "Exa",
+  "description": "AI-native web search and page fetching via Exa's search API.",
+  "homepage": "https://github.com/exa-labs/exa-mcp-server",
+  "tags": ["search", "web", "research"],
+  "transports": {
+    "stdio": {
+      "command": "npx",
+      "args": ["-y", "exa-mcp-server"],
+      "env": { "EXA_API_KEY": "{{secret:api_key}}" }
+    },
+    "http": {
+      "url": "https://mcp.exa.ai/mcp",
+      "headers": { "Authorization": "Bearer {{secret:api_key}}" }
+    }
+  },
+  "defaultTransport": "stdio",
+  "settings": [],
+  "secrets": [
+    { "key": "api_key", "label": "Exa API key", "required": true, "help": "dashboard.exa.ai → API Keys" }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "$schema": "../schema/template.schema.json",
+  "id": "playwright",
+  "name": "Playwright",
+  "description": "Browser automation capabilities using Playwright, via Microsoft's official MCP server.",
+  "homepage": "https://github.com/microsoft/playwright-mcp",
+  "tags": ["browser", "automation", "testing"],
+  "transports": {
+    "stdio": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@playwright/mcp@latest",
+        "{{#browser}}--browser={{browser}}{{/browser}}",
+        "{{#headless}}--headless{{/headless}}",
+        "{{#isolated}}--isolated{{/isolated}}"
+      ]
+    }
+  },
+  "defaultTransport": "stdio",
+  "settings": [
+    { "key": "browser", "label": "Browser", "type": "string", "help": "Optional: chrome, firefox, webkit or msedge. Defaults to chrome." },
+    { "key": "headless", "label": "Headless", "type": "boolean", "default": false, "help": "Run the browser without a window." },
+    { "key": "isolated", "label": "Isolated profile", "type": "boolean", "default": false, "help": "Keep the browser profile in memory instead of saving it to disk." }
+  ],
+  "secrets": []
+}

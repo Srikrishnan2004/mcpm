@@ -1,0 +1,21 @@
+{
+  "$schema": "../schema/template.schema.json",
+  "id": "vercel",
+  "name": "Vercel",
+  "description": "Search Vercel docs, manage projects and deployments, and read deployment logs via Vercel's official remote MCP.",
+  "homepage": "https://vercel.com/docs/agent-resources/vercel-mcp",
+  "tags": ["deployment", "hosting", "devops"],
+  "transports": {
+    "stdio": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://mcp.vercel.com"]
+    },
+    "http": {
+      "url": "https://mcp.vercel.com",
+      "auth": "oauth"
+    }
+  },
+  "defaultTransport": "stdio",
+  "settings": [],
+  "secrets": []
+}

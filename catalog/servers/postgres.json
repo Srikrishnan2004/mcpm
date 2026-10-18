@@ -1,0 +1,25 @@
+{
+  "$schema": "../schema/template.schema.json",
+  "id": "postgres",
+  "name": "PostgreSQL",
+  "description": "Query any PostgreSQL database, inspect schemas, explain plans and get index/health recommendations (Postgres MCP Pro by Crystal DBA).",
+  "homepage": "https://github.com/crystaldba/postgres-mcp",
+  "tags": ["database", "postgres", "sql"],
+  "transports": {
+    "stdio": {
+      "command": "uvx",
+      "args": [
+        "postgres-mcp",
+        "{{#read_only}}--access-mode=restricted{{/read_only}}"
+      ],
+      "env": { "DATABASE_URI": "{{secret:database_uri}}" }
+    }
+  },
+  "defaultTransport": "stdio",
+  "settings": [
+    { "key": "read_only", "label": "Read-only (restricted mode)", "type": "boolean", "default": true, "help": "Restricted mode runs read-only transactions with execution time limits. Turn off for full read/write access (development databases only)." }
+  ],
+  "secrets": [
+    { "key": "database_uri", "label": "Connection URI", "required": true, "help": "postgresql://username:password@host:5432/dbname. Use a read-only database role for production." }
+  ]
+}

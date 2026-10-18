@@ -1,0 +1,25 @@
+{
+  "$schema": "../schema/template.schema.json",
+  "id": "slack",
+  "name": "Slack",
+  "description": "Read channels, threads, DMs and search messages in a Slack workspace; posting is opt-in.",
+  "homepage": "https://github.com/korotovsky/slack-mcp-server",
+  "tags": ["chat", "communication", "productivity"],
+  "transports": {
+    "stdio": {
+      "command": "npx",
+      "args": ["-y", "slack-mcp-server@latest", "--transport", "stdio"],
+      "env": {
+        "SLACK_MCP_XOXP_TOKEN": "{{secret:user_token}}",
+        "SLACK_MCP_ADD_MESSAGE_TOOL": "{{#allow_posting}}true{{/allow_posting}}"
+      }
+    }
+  },
+  "defaultTransport": "stdio",
+  "settings": [
+    { "key": "allow_posting", "label": "Allow posting messages", "type": "boolean", "default": false, "help": "Enables the conversations_add_message tool for all channels" }
+  ],
+  "secrets": [
+    { "key": "user_token", "label": "User OAuth token (xoxp-...)", "required": true, "help": "api.slack.com/apps → your app → OAuth & Permissions → User OAuth Token" }
+  ]
+}

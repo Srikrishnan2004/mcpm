@@ -1,0 +1,23 @@
+{
+  "$schema": "../schema/template.schema.json",
+  "id": "git",
+  "name": "Git",
+  "description": "Read, search and manipulate local Git repositories: status, diff, log, commit, branch.",
+  "homepage": "https://github.com/modelcontextprotocol/servers/tree/main/src/git",
+  "tags": ["git", "code", "local"],
+  "transports": {
+    "stdio": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-git",
+        "{{#repository}}--repository{{/repository}}",
+        "{{#repository}}{{repository}}{{/repository}}"
+      ]
+    }
+  },
+  "defaultTransport": "stdio",
+  "settings": [
+    { "key": "repository", "label": "Repository path", "type": "string", "help": "Any path inside a Git working tree; leave empty to pass a repo path per tool call" }
+  ],
+  "secrets": []
+}
