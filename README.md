@@ -2,6 +2,12 @@
 
 **One desktop app to manage MCP servers across every AI IDE and CLI.**
 
+[Website](https://srikrishnan2004.github.io/mcpm/) · [Watch the demo](https://srikrishnan2004.github.io/mcpm/#demo) · [Design doc](docs/DESIGN.md)
+
+[![mcpm demo video: remapping supabase@dev to supabase@prod across Claude Code, Cursor and Antigravity](.github/assets/demo-thumbnail.jpg)](https://srikrishnan2004.github.io/mcpm/#demo)
+
+<sub>▶ Click to watch the 60-second demo, or [download the MP4](site/demo.mp4).</sub>
+
 Claude Code, Cursor, VS Code, Windsurf/Devin Desktop, Antigravity, Gemini CLI, Claude Desktop, Codex… each keeps MCP servers in its own file and format. mcpm gives you one registry, **named instances** of the same server (`supabase@client-a`, `supabase@personal`), and **per-project remapping** — without copying tokens into config files.
 
 ```

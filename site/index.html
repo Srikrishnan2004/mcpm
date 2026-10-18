@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>mcpm — MCP servers, managed once</title>
+  <meta name="description" content="One desktop app to manage MCP servers across Claude Code, Cursor, VS Code, Windsurf, Antigravity, Gemini CLI and Claude Desktop. Named instances, per-project remapping, secrets in your OS keychain.">
+  <meta property="og:title" content="mcpm — MCP servers, managed once">
+  <meta property="og:description" content="Save each account once (supabase@dev, supabase@prod), keep tokens in your OS keychain, and remap a project across every AI editor in one click.">
+  <meta property="og:image" content="https://srikrishnan2004.github.io/mcpm/poster.jpg">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* Tokens mirror apps/desktop/src/styles/tokens.css */
+    :root {
+      color-scheme: dark;
+      --bg-100: #0a0a0a;
+      --bg-200: #000000;
+      --gray-100: #1a1a1a;
+      --gray-200: #1f1f1f;
+      --gray-400: #2e2e2e;
+      --gray-600: #878787;
+      --gray-900: #a1a1a1;
+      --gray-1000: #ededed;
+      --blue-700: #0072f5;
+      --green-700: #45a557;
+      --hairline: #ffffff25;
+      --code-key: #a1a1a1;
+      --code-str: #62c073;
+      --btn-bg: #ededed;
+      --btn-fg: #0a0a0a;
+      --glow: #ffffff0f;
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        color-scheme: light;
+        --bg-100: #ffffff;
+        --bg-200: #fafafa;
+        --gray-100: #f2f2f2;
+        --gray-200: #ebebeb;
+        --gray-400: #ebebeb;
+        --gray-600: #a8a8a8;
+        --gray-900: #4d4d4d;
+        --gray-1000: #171717;
+        --hairline: #00000014;
+        --code-key: #4d4d4d;
+        --code-str: #297a3a;
+        --btn-bg: #171717;
+        --btn-fg: #ffffff;
+        --glow: #0000000a;
+      }
+    }
+
+    * { box-sizing: border-box; margin: 0; }
+    body {
+      background: var(--bg-200);
+      color: var(--gray-1000);
+      font: 16px/1.6 "Geist", system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; }
+    code, pre { font-family: "Geist Mono", ui-monospace, monospace; }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 16px; }
+
+    nav {
+      position: sticky; top: 0; z-index: 10;
+      background: color-mix(in srgb, var(--bg-200) 80%, transparent);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--hairline);
+    }
+    nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 600; text-decoration: none; font-family: "Geist Mono", monospace; }
+    .brand img { width: 26px; height: 26px; }
+    .nav-links { display: flex; gap: 20px; align-items: center; font-size: 14px; }
+    .nav-links a { text-decoration: none; color: var(--gray-900); }
+    .nav-links a:hover { color: var(--gray-1000); }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      height: 40px; padding: 0 16px; border-radius: 8px;
+      font-size: 14px; font-weight: 500; text-decoration: none;
+      border: 1px solid var(--hairline);
+      transition: background .15s, border-color .15s;
+    }
+    .btn-primary { background: var(--btn-bg); color: var(--btn-fg); border-color: transparent; }
+    .btn-primary:hover { opacity: .88; }
+    .btn-ghost { background: var(--bg-100); }
+    .btn-ghost:hover { background: var(--gray-100); }
+    .btn svg { width: 16px; height: 16px; }
+
+    header { padding: 88px 0 48px; text-align: center; position: relative; }
+    header::before {
+      content: ""; position: absolute; inset: 0 0 auto; height: 520px; z-index: -1;
+      background: radial-gradient(60% 60% at 50% 0%, var(--glow), transparent 70%);
+    }
+    .eyebrow {
+      display: inline-flex; gap: 8px; align-items: center;
+      font: 500 13px/1 "Geist Mono", monospace; color: var(--gray-900);
+      border: 1px solid var(--hairline); border-radius: 999px; padding: 6px 12px; margin-bottom: 24px;
+    }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green-700); }
+    h1 { font-size: clamp(36px, 6.4vw, 68px); line-height: 1.04; letter-spacing: -0.045em; font-weight: 600; text-wrap: balance; }
+    h1 span { color: var(--gray-900); }
+    .lede { max-width: 640px; margin: 20px auto 0; font-size: 18px; color: var(--gray-900); text-wrap: pretty; }
+    .cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 32px; }
+
+    .video-frame {
+      margin: 56px auto 0; border-radius: 14px; overflow: hidden;
+      border: 1px solid var(--hairline); background: #000;
+      box-shadow: 0 1px 1px #0000000a, 0 24px 64px -16px #00000066;
+      aspect-ratio: 16 / 9;
+    }
+    .video-frame video { display: block; width: 100%; height: 100%; }
+
+    section { padding: 88px 0 0; }
+    .section-head { max-width: 620px; margin-bottom: 36px; }
+    .kicker { font: 500 13px "Geist Mono", monospace; color: var(--gray-900); text-transform: uppercase; letter-spacing: .04em; }
+    h2 { font-size: clamp(28px, 4vw, 40px); letter-spacing: -0.035em; line-height: 1.12; font-weight: 600; margin-top: 8px; text-wrap: balance; }
+    .section-head p { color: var(--gray-900); margin-top: 12px; }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1px; background: var(--hairline); border: 1px solid var(--hairline); border-radius: 12px; overflow: hidden; }
+    .card { background: var(--bg-100); padding: 28px; }
+    .card h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; display: flex; gap: 10px; align-items: center; }
+    .card h3 svg { width: 18px; height: 18px; color: var(--gray-900); flex: none; }
+    .card p { color: var(--gray-900); font-size: 15px; }
+    .card code { font-size: 13px; background: var(--gray-100); border: 1px solid var(--hairline); border-radius: 5px; padding: 1px 5px; color: var(--gray-1000); }
+
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: stretch; }
+    @media (max-width: 820px) { .split { grid-template-columns: 1fr; } }
+    .panel { background: var(--bg-100); border: 1px solid var(--hairline); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; }
+    .panel-bar { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; border-bottom: 1px solid var(--hairline); font: 13px "Geist Mono", monospace; color: var(--gray-900); }
+    .panel pre { padding: 18px 16px; font-size: 13.5px; line-height: 1.7; overflow-x: auto; flex: 1; }
+    .k { color: var(--code-key); } .s { color: var(--code-str); } .c { color: var(--gray-600); }
+    .steps { list-style: none; padding: 8px 0; flex: 1; }
+    .steps li { display: grid; grid-template-columns: 28px 1fr; gap: 12px; padding: 14px 20px; }
+    .steps li + li { border-top: 1px solid var(--hairline); }
+    .num { width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--hairline); display: grid; place-items: center; font: 500 12px "Geist Mono", monospace; color: var(--gray-900); }
+    .steps b { font-weight: 600; display: block; }
+    .steps span { color: var(--gray-900); font-size: 15px; }
+
+    .clients { display: flex; flex-wrap: wrap; gap: 10px; }
+    .pill { display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--hairline); background: var(--bg-100); font-size: 14px; font-weight: 500; }
+    .pill small { font: 12px "Geist Mono", monospace; color: var(--gray-900); }
+    .pill.next { color: var(--gray-900); border-style: dashed; }
+
+    .install pre { font-size: 14px; }
+    .note { margin-top: 14px; color: var(--gray-900); font-size: 14px; }
+
+    footer { margin-top: 96px; border-top: 1px solid var(--hairline); padding: 28px 0 40px; color: var(--gray-900); font-size: 14px; }
+    footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    footer a { text-decoration: none; } footer a:hover { color: var(--gray-1000); }
+
+    @media (max-width: 560px) {
+      header { padding-top: 56px; }
+      .nav-links a.hide-sm { display: none; }
+      .card { padding: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="wrap">
+      <a class="brand" href="#"><img src="icon.svg" alt="">mcpm</a>
+      <div class="nav-links">
+        <a class="hide-sm" href="#demo">Demo</a>
+        <a class="hide-sm" href="#how">How it works</a>
+        <a class="hide-sm" href="#start">Get started</a>
+        <a class="btn btn-ghost" href="https://github.com/Srikrishnan2004/mcpm">
+          <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <header>
+    <div class="wrap">
+      <div class="eyebrow"><span class="dot"></span>Open source · v0.1 · built with Tauri</div>
+      <h1>Your MCP servers,<br><span>managed once.</span></h1>
+      <p class="lede">Save each account once — <code>supabase@dev</code>, <code>supabase@prod</code> — keep its token in your OS keychain, and remap a project across every AI editor in one click.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="#demo">
+          <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg>
+          Watch the demo
+        </a>
+        <a class="btn btn-ghost" href="https://github.com/Srikrishnan2004/mcpm">View on GitHub</a>
+      </div>
+      <div class="video-frame" id="demo">
+        <video src="demo.mp4" poster="poster.jpg" controls playsinline preload="metadata"></video>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <div class="kicker">The problem</div>
+        <h2>One MCP server. Seven editors. Seven config files.</h2>
+        <p>Claude Code, Cursor, VS Code, Windsurf, Antigravity, Gemini CLI and Claude Desktop each keep MCP servers in their own file and format. A new Supabase account used to mean deleting the entry, pasting a new token, and doing it again in every editor.</p>
+      </div>
+      <div class="grid">
+        <div class="card">
+          <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Named instances</h3>
+          <p>A server template plus settings and credentials. Run as many as you need: <code>supabase@dev</code>, <code>supabase@prod</code>, <code>github@work</code>.</p>
+        </div>
+        <div class="card">
+          <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h13l-3-3M20 17H7l3 3"/></svg>Per-project remapping</h3>
+          <p>Bind an entry name to an instance per folder. Switch it from dev to prod and mcpm rewrites every selected editor's config.</p>
+        </div>
+        <div class="card">
+          <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg>Secrets in the keychain</h3>
+          <p>Tokens live only in Windows Credential Manager, macOS Keychain or Linux Secret Service — never in a config file.</p>
+        </div>
+        <div class="card">
+          <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l8 4v5c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V7z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>Safe writes</h3>
+          <p>mcpm only touches entries it owns, refuses to overwrite yours, and backs up every file before writing.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="kicker">How it works</div>
+        <h2>Config files only say <code>mcpm run</code>.</h2>
+        <p>Every entry mcpm writes is a tiny launcher. Secrets load at launch, from the keychain, so the file stays safe to commit.</p>
+      </div>
+      <div class="split">
+        <div class="panel">
+          <div class="panel-bar"><span>~/code/shop-app/.mcp.json</span><span>Claude Code</span></div>
+<pre>{
+  <span class="k">"mcpServers"</span>: {
+    <span class="k">"supabase-dev"</span>: {
+      <span class="k">"type"</span>: <span class="s">"stdio"</span>,
+      <span class="k">"command"</span>: <span class="s">"mcpm"</span>,
+      <span class="k">"args"</span>: [<span class="s">"run"</span>, <span class="s">"supabase@dev"</span>]
+    },
+    <span class="k">"supabase-prod"</span>: {
+      <span class="k">"type"</span>: <span class="s">"stdio"</span>,
+      <span class="k">"command"</span>: <span class="s">"mcpm"</span>,
+      <span class="k">"args"</span>: [<span class="s">"run"</span>, <span class="s">"supabase@prod"</span>]
+    }
+  }
+}  <span class="c">// no tokens here</span></pre>
+        </div>
+        <div class="panel">
+          <div class="panel-bar"><span>At launch</span><span>mcpm run supabase@prod</span></div>
+          <ol class="steps">
+            <li><span class="num">1</span><div><b>Editor starts the entry</b><span>Claude Code, Cursor or any client runs <code>mcpm run &lt;instance&gt;</code>.</span></div></li>
+            <li><span class="num">2</span><div><b>Secrets come from the OS keychain</b><span>The shim reads the instance's credentials, which never go into a config file.</span></div></li>
+            <li><span class="num">3</span><div><b>The real server is spawned</b><span>The template renders the command and environment, then starts the server.</span></div></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <div class="kicker">Supported clients</div>
+        <h2>Every editor you already use.</h2>
+      </div>
+      <div class="clients">
+        <span class="pill">Claude Code <small>.mcp.json</small></span>
+        <span class="pill">Cursor <small>.cursor/mcp.json</small></span>
+        <span class="pill">VS Code <small>.vscode/mcp.json</small></span>
+        <span class="pill">Antigravity <small>.agents/mcp_config.json</small></span>
+        <span class="pill">Gemini CLI <small>.gemini/settings.json</small></span>
+        <span class="pill">Windsurf / Devin Desktop</span>
+        <span class="pill">Claude Desktop</span>
+        <span class="pill next">Codex (TOML) — next</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="start" class="install">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="kicker">Get started</div>
+        <h2>Build it from source.</h2>
+        <p>Needs Rust (stable), Node 20+, pnpm, and the <a href="https://v2.tauri.app/start/prerequisites/">Tauri prerequisites</a> for your OS.</p>
+      </div>
+      <div class="panel">
+        <div class="panel-bar"><span>Terminal</span></div>
+<pre><span class="c"># clone</span>
+git clone https://github.com/Srikrishnan2004/mcpm.git
+cd mcpm
+
+<span class="c"># install the launcher shim so editors can run `mcpm`</span>
+cargo install --path crates/cli
+
+<span class="c"># run the desktop app</span>
+cd apps/desktop
+pnpm install
+pnpm tauri dev</pre>
+      </div>
+      <p class="note">New server templates and client adapters are the most valuable contributions — see <a href="https://github.com/Srikrishnan2004/mcpm/blob/main/CONTRIBUTING.md">CONTRIBUTING.md</a>.</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <span>mcpm · dual-licensed MIT or Apache-2.0</span>
+      <span><a href="https://github.com/Srikrishnan2004/mcpm">GitHub</a> · <a href="https://github.com/Srikrishnan2004/mcpm/blob/main/docs/DESIGN.md">Design doc</a> · <a href="https://github.com/Srikrishnan2004/mcpm/issues">Issues</a></span>
+    </div>
+  </footer>
+</body>
+</html>
